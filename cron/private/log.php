@@ -190,7 +190,6 @@ $dates = [date('Y-m-d')];
 foreach ($dates as $date) {
 
     $extension = '';
-
     $errorLog->process("bastrucks.erp.err$extension", $date, 'basprivweb1', 'vandam@172.16.31.107', null);
     $errorLog->process("bastrucks.erp.err$extension", $date, 'basprivweb2', 'vandam@172.16.31.108', null);
 
