@@ -1,0 +1,36 @@
+<div style="overflow: hidden">
+<div class="col-md-3 col-sm-6 col-xs-12" style="margin-top: 20px; width:90%">
+    <ul class="timeline">
+        <li class="time-label">
+            <span class="bg-red"><?php echo $this->results[0]->message; ?></span>
+        </li>
+
+        <?php foreach($this->results as $result): ?>
+        <li>
+            <i class="fa fa-comments bg-red"></i>
+            <div class="timeline-item">
+                <span class="time"><i class="fa fa-clock-o"></i> <?php $this->time($result->log_date); ?></span>
+                <h3 class="timeline-header"><a href="#"><?php echo $result->node; ?></a></h3>
+                <div class="timeline-body" id="stack_trace_0">
+                    <?php if(!empty($result->location)): ?>
+                        <b>Location :</b> <?php echo $result->location, '<br>'; ?>
+                    <?php endif;?>
+                    <?php if(!empty($result->referer)): ?>
+                        <b>Referer :</b> <?php echo $result->referer, '<br>'; ?>
+                    <?php endif;?>
+					<?php if(!empty($result->stack_trace)): ?>
+                        <b>Stack Trace :</b> <?php echo $result->stack_trace, '<br>'; ?>
+                    <?php endif;?>
+                </div>
+                <div class="timeline-footer">
+                </div>
+            </div>
+        </li>
+        <?php endforeach; ?>
+        <li>
+            <i class="fa fa-clock-o bg-gray"></i>
+        </li>
+
+    </ul>
+</div>
+</div>

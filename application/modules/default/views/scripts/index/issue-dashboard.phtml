@@ -1,0 +1,24 @@
+<?php foreach($this->users as $user) :?>
+<div class="col-md-4">
+    <!-- Widget: user widget style 1 -->
+    <div class="box box-widget widget-user-2">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-yellow">
+            <div class="widget-user-image">
+                <img class="img-circle" src="/images/<?php echo $user['logo']; ?>" alt="User Avatar">
+            </div>
+            <!-- /.widget-user-image -->
+            <h3 class="widget-user-username"><?php echo $user['name']; ?></h3>
+            <h5 class="widget-user-desc">Developer (<?php echo $user['team']; ?>)</h5>
+        </div>
+        <div class="box-footer no-padding">
+            <ul class="nav nav-stacked">
+                <li><a href="#"><b># of issue</b><span class="pull-right badge bg-blue"><?php echo $user['Open'] + $user['Fixed']; ?></span></a></li>
+                <li><a href="<?php $this->url(); ?>/issue-assigned">Open <span class="pull-right badge bg-aqua"><?php echo $user['Open']; ?></span></a></li>
+                <li><a href="#"><b>Fixed </b><span class="pull-right badge bg-green"><?php echo $user['Fixed']; ?></span></a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /.widget-user -->
+</div>
+<?php endforeach; ?>

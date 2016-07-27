@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>BUGSniffer | Lockscreen</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/AdminLTE.min.css">
+
+</head>
+<body class="hold-transition lockscreen">
+<div class="lockscreen-wrapper">
+    <div class="lockscreen-logo">
+        <b>BUG</b>Sniffer
+    </div>
+    <?php if(is_object($this->userModel)) :?>
+        <div class="lockscreen-name"><?php echo $this->userModel->name; ?></div>
+    <?php endif; ?>
+
+    <?php if(isset($this->email) && !is_object($this->userModel)) :?>
+        <div class="lockscreen-name">Invalid email-address</div>
+    <?php endif; ?>
+
+
+    <div class="lockscreen-item">
+        <div class="lockscreen-image">
+            <?php if((isset($this->email) && !is_object($this->userModel)) || !isset($this->email)) :?>
+                <img src="/images/user.png" alt="User Image">
+            <?php endif; ?>
+
+            <?php if(isset($this->email) && is_object($this->userModel)) :?>
+                <img src="/images/<?php echo $this->userModel->logo; ?>" alt="User Image">
+            <?php endif; ?>
+        </div>
+        <form class="lockscreen-credentials" method="post" action="/login">
+            <div class="input-group">
+                <?php if(!isset($this->email) || !is_object($this->userModel)) :?>
+                    <input type="username" class="form-control" name="username" placeholder="enter your email address" value="<?php echo $this->email; ?>">
+                <?php endif; ?>
+                <?php if(isset($this->email) && is_object($this->userModel)) :?>
+                    <input type="hidden" name="username" value="<?php echo $this->userModel->email;?>"/>
+                    <input type="password" name="password" class="form-control" placeholder="password">
+                <?php endif; ?>
+                <div class="input-group-btn">
+                    <button type="submit" class="btn"><i class="fa fa-arrow-right text-muted"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <?php if(isset($this->email) && is_object($this->userModel)) :?>
+        <div class="help-block text-center">
+            Enter your password to retrieve your session
+        </div>
+        <div class="text-center">
+            <a>Or sign in as a different user</a>
+        </div>
+    <?php endif; ?>
+
+</div>
+
+<script src="../../plugins/jQuery/jQuery-2.2.0.min.js"></script>
+<script src="../../bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

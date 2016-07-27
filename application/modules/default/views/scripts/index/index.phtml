@@ -1,0 +1,373 @@
+<!-- Main content -->
+    <section class="content">
+      <!-- Info boxes -->
+
+      <!-- /.row -->
+      <div class="row">
+          <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-aqua">
+                  <div class="inner">
+                      <h3>
+                          <?php
+                                if (isset($this->logs[date('Y-m-d')])) {
+                                    echo number_format($this->logs[date('Y-m-d')]['NOTICE'], 0);
+                                } else {
+                                    echo 0;
+                                }
+                          ?>
+                      </h3>
+                      <p>Notice</p>
+                  </div>
+                  <div class="icon">
+                      <i class="fa fa-commenting"></i>
+                  </div>
+                  <a class="small-box-footer" href="<?php $this->url(); ?>/details?type=NOTICE&node=<?php echo $this->node;?>&log_date=<?php echo date('Y-m-d');?>">
+                      More info <i class="fa fa-arrow-circle-right"></i>
+                  </a>
+              </div>
+          </div>
+          <!-- ./col -->
+
+          <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-yellow">
+                  <div class="inner">
+                      <h3>
+                          <?php
+                                if (isset($this->logs[date('Y-m-d')])) {
+                                    echo number_format($this->logs[date('Y-m-d')]['WARNING'], 0);
+                                } else {
+                                    echo 0;
+                                }
+                          ?>
+                      </h3>
+
+                      <p>Warning</p>
+                  </div>
+                  <div class="icon">
+                      <i class="fa fa-warning"> </i>
+                  </div>
+                  <a class="small-box-footer" href="<?php $this->url(); ?>/details?type=WARNING&node=<?php echo $this->node;?>&log_date=<?php echo date('Y-m-d');?>">
+                      More info <i class="fa fa-arrow-circle-right"></i>
+                  </a>
+              </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-red">
+                  <div class="inner">
+                      <h3>
+                          <?php
+                                if (isset($this->logs[date('Y-m-d')])) {
+                                    echo number_format($this->logs[date('Y-m-d')]['ERROR'], 0);
+                                } else {
+                                    echo 0;
+                                }
+                          ?>
+                      </h3>
+
+                      <p>Fatal error</p>
+                  </div>
+                  <div class="icon">
+                      <i class="fa fa-bug"> </i>
+                  </div>
+                  <a class="small-box-footer" href="<?php $this->url(); ?>/details?type=ERROR&node=<?php echo $this->node;?>&log_date=<?php echo date('Y-m-d');?>">
+                      More info <i class="fa fa-arrow-circle-right"></i>
+                  </a>
+              </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-green">
+                  <div class="inner">
+                      <h3><?php echo $this->fixed; ?></h3>
+
+                      <p>Fixed</p>
+                  </div>
+                  <div class="icon">
+                      <i class="fa fa-check"></i>
+                  </div>
+                  <a class="small-box-footer" href="<?php $this->url(); ?>/details?type=Fixed&node=<?php echo $this->node;?>&log_date=<?php echo date('Y-m-d');?>">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+          </div>
+          <!-- ./col -->
+      </div>
+      <!-- TABLE: LATEST ORDERS -->
+      <div class="box box-info">
+          <div class="box-header with-border">
+              <h3 class="box-title">Last week</h3>
+
+              <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+              <div class="table-responsive">
+                  <table class="table no-margin">
+                      <thead>
+                      <tr>
+                          <th>Date</th>
+                          <th>Notice</th>
+                          <th>Warning</th>
+                          <th>Error</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <?php
+                            unset($this->logs[date('Y-m-d')]);
+                      ?>
+                      <?php foreach($this->logs as $date => $row) :?>
+                      <tr>
+                          <td><a href=""><?php echo date('d-M-Y', strtotime($date));?></a></td>
+                          <td>
+                              <a href="<?php $this->url(); ?>/details?type=NOTICE&node=<?php echo $this->node;?>&log_date=<?php echo $date;?>">
+                                  <span class="label label-info" style="font-size: 13px; width: 55px; display: block">
+                                      <?php $this->printVal('NOTICE', $row); ;?>
+                                  </span>
+                              </a>
+                          </td>
+                          <td>
+                              <a href="<?php $this->url(); ?>/details?type=WARNING&node=<?php echo $this->node;?>&log_date=<?php echo $date;?>">
+                                  <span class="label label-warning" style="font-size: 13px !important; width: 55px; display: block">
+                                      <?php $this->printVal('WARNING', $row); ;?>
+                                  </span>
+                              </a>
+                          </td>
+                          <td><a href="<?php $this->url(); ?>/details?type=ERROR&node=<?php echo $this->node;?>&log_date=<?php echo $date;?>">
+                                  <span class="label label-danger" style="font-size: 13px; width: 55px; display: block">
+                                      <?php $this->printVal('ERROR', $row); ;?>
+                                  </span>
+                              </a>
+                          </td>
+                      </tr>
+                      <?php endforeach;?>
+                      </tbody>
+                  </table>
+              </div>
+              <!-- /.table-responsive -->
+          </div>
+
+      </div>
+      <!-- /.box -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Monthly Bug Report</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-wrench"></i></button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="http://extranet.bas-dev.net/themes/AdminLTE/index2.html#">Action</a></li>
+                    <li><a href="http://extranet.bas-dev.net/themes/AdminLTE/index2.html#">Another action</a></li>
+                    <li><a href="http://extranet.bas-dev.net/themes/AdminLTE/index2.html#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="http://extranet.bas-dev.net/themes/AdminLTE/index2.html#">Separated link</a></li>
+                  </ul>
+                </div>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+
+
+                  <div class="col-md-4">
+                      <p class="text-center">
+                          <strong>Warning: 1 Jan, 2016 - 31 Dec, 2016</strong>
+                      </p>
+                      <div class="chart">
+                          <canvas id="salesChartNotice"></canvas>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <p class="text-center">
+                          <strong>Notice: 1 Jan, 2016 - 31 Dec, 2016</strong>
+                      </p>
+                      <div class="chart">
+                          <canvas id="salesChartWarning"></canvas>
+                      </div>
+                      <!-- /.chart-responsive -->
+                  </div>
+                  <div class="col-md-4">
+                      <p class="text-center">
+                          <strong>Error: 1 Jan, 2016 - 31 Dec, 2016</strong>
+                      </p>
+                      <div class="chart">
+                          <canvas id="salesChartError"></canvas>
+                      </div>
+                      <!-- /.chart-responsive -->
+                  </div>
+
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- ./box-body -->
+            <div class="box-footer">
+              <div class="row">
+              <div class="col-sm-3 col-xs-6">
+                  <div class="description-block">
+                      <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+                      <h5 class="description-header">1200</h5>
+                      <span class="description-text"># Notice</span>
+                  </div>
+                  <!-- /.description-block -->
+              </div>
+              <div class="col-sm-3 col-xs-6">
+                  <div class="description-block">
+                      <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+                      <h5 class="description-header">1200</h5>
+                      <span class="description-text"># Warning</span>
+                  </div>
+                  <!-- /.description-block -->
+              </div>
+              <div class="col-sm-3 col-xs-6">
+                  <div class="description-block">
+                      <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+                      <h5 class="description-header">1200</h5>
+                      <span class="description-text"># Error</span>
+                  </div>
+                  <!-- /.description-block -->
+              </div>
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block">
+                    <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+                    <h5 class="description-header">1200</h5>
+                    <span class="description-text"># Fixed</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-footer -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+      <!-- Main row -->
+      <div class="row">
+
+
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+
+
+<script type="text/javascript">
+
+$(function () {
+
+    'use strict';
+    var areaChartDataWarning = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [
+            {
+                label: "Warning",
+                fillColor: "#f39c12",
+                strokeColor: "#f39c12",
+                pointColor: "#f39c12",
+                pointStrokeColor: "#f39c12",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(60,141,188,1)",
+                data: [<?php echo implode(',', $this->monthlogs['warning'])?>]
+            }
+        ]
+    };
+
+    var areaChartDataNotice = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [
+            {
+                label: "Notice",
+                fillColor: "#00c0ef",
+                strokeColor: "#00c0ef",
+                pointColor: "#00c0ef",
+                pointStrokeColor: "#00c0ef",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [<?php echo implode(',', $this->monthlogs['notice'])?>]
+            }
+        ]
+    };
+
+    var areaChartDataError = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [
+            {
+                label: "Error",
+                fillColor: "#dd4b39",
+                strokeColor: "#dd4b39",
+                pointColor: "#dd4b39",
+                pointStrokeColor: "#dd4b39",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(60,141,188,1)",
+                data: [<?php echo implode(',', $this->monthlogs['error'])?>]
+            }
+        ]
+    };
+
+    var barChartCanvasNotice = $("#salesChartNotice").get(0).getContext("2d");
+    var barChartNotice = new Chart(barChartCanvasNotice);
+    var barChartDataNotice = areaChartDataNotice;
+
+    var barChartCanvasWarning = $("#salesChartWarning").get(0).getContext("2d");
+    var barChartWarning = new Chart(barChartCanvasWarning);
+    var barChartDataWarning = areaChartDataWarning;
+
+    var barChartCanvasError = $("#salesChartError").get(0).getContext("2d");
+    var barChartError = new Chart(barChartCanvasError);
+    var barChartDataError = areaChartDataError;
+
+    var barChartOptions = {
+        //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+        scaleBeginAtZero: true,
+        //Boolean - Whether grid lines are shown across the chart
+        scaleShowGridLines: true,
+        //String - Colour of the grid lines
+        scaleGridLineColor: "rgba(0,0,0,.05)",
+        //Number - Width of the grid lines
+        scaleGridLineWidth: 1,
+        //Boolean - Whether to show horizontal lines (except X axis)
+        scaleShowHorizontalLines: true,
+        //Boolean - Whether to show vertical lines (except Y axis)
+        scaleShowVerticalLines: true,
+        //Boolean - If there is a stroke on each bar
+        barShowStroke: true,
+        //Number - Pixel width of the bar stroke
+        barStrokeWidth: 2,
+        //Number - Spacing between each of the X value sets
+        barValueSpacing: 5,
+        //Number - Spacing between data sets within X values
+        barDatasetSpacing: 1,
+        //String - A legend template
+
+        //Boolean - whether to make the chart responsive
+        responsive: true,
+        maintainAspectRatio: true
+    };
+
+    barChartOptions.datasetFill = false;
+    barChartNotice.Bar(barChartDataNotice, barChartOptions);
+    barChartWarning.Bar(barChartDataWarning, barChartOptions);
+    barChartError.Bar(barChartDataError, barChartOptions);
+
+});
+
+</script>

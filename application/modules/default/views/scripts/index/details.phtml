@@ -1,0 +1,159 @@
+<!-- Main content -->
+<div style="overflow: hidden">
+    <?php foreach($this->result as $key => $row): ?>
+    <div class="col-md-3 col-sm-6 col-xs-12" style="margin-top: 20px; width:90%">
+        <ul class="timeline">
+
+            <?php if ($row['status'] == 'Fixed'):?>
+                <li class="time-label">
+                    <a class="btn btn-success fixed-btn fixed-btn-1" key="1" id="fixed_1" target="_blank">
+                        <i class="fa fa-check"></i>
+                        <span id="mantis_issue_0">
+                            Fixed
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <i class="fa fa-user bg-aqua"></i>
+                    <div class="timeline-item">
+                        <span class="time"><i class="fa fa-shield"></i></span>
+                        <h3 class="timeline-header no-border"><a href="#"><?php echo $row['assign']; ?></a> fixed this issue</h3>
+                    </div>
+                </li>
+                <li>
+                    <i class="fa fa-comments bg-yellow"></i>
+                    <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> <?php echo $this->time($row['issue_fixed']); ?></span>
+                        <h3 class="timeline-header"><a href="#"><?php echo $row['assign']; ?></a> commented on issue</h3>
+                        <div class="timeline-body"><?php echo $row['comment']; ?></div>
+                    </div>
+                </li>
+            <?php endif; ?>
+
+            <?php if (!empty($row['assign']) && $row['status'] != 'Fixed'):?>
+            <li class="time-label">
+                <span class="bg-aqua">
+                    Status : open
+                  </span>
+            </li>
+            <li>
+                <i class="fa fa-user bg-aqua"></i>
+                <div class="timeline-item">
+                    <span class="time"><i class="fa fa-inbox"></i></span>
+                    <h3 class="timeline-header no-border">
+                        Issue assigned to :
+                        <a target="_blank" href="">
+                            <?php echo $row['assign']?>
+                        </a>
+                    </h3>
+                </div>
+            </li>
+            <?php endif; ?>
+
+            <li class="time-label">
+                <?php if (empty($row['mantis_id'])): ?>
+                  <span class="bg-red">
+                    Next step : Assign 
+                  </span>
+                <?php endif; ?>
+                <?php if (!empty($row['mantis_id']) && $row['status'] != 'Fixed'): ?>
+                    <span class="bg-green">
+                    Mantis created
+                    </span>
+                <?php endif; ?>
+            </li>
+
+            <?php if (!empty($row['mantis_id']) && $row['mantis_id'] != 1): ?>
+                <li>
+                    <i class="fa fa-bug bg-aqua"></i>
+                    <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> <?php $this->time($row['mantis_created']); ?></span>
+                        <h3 class="timeline-header no-border">
+                            Mantis Id :
+                            <a target="_blank" href="https://mantis.bas-dev.net/view.php?id=<?php echo $row['mantis_id']?>">
+                                <?php echo $row['mantis_id']?>
+                            </a>
+                        </h3>
+                    </div>
+                </li>
+            <?php endif;?>
+
+            <li>
+                <i class="fa fa-envelope bg-blue"></i>
+                <div class="timeline-item">
+                    <span class="time info-box-icon <?php echo $this->class; ?>" style="font-size:40px; padding: 0px;">
+                        <a style="color: white !important;" href="<?php $this->url(); ?>/history?mes=<?php echo $row['message']; ?>&node=<?php echo $this->node; ?>"><?php echo $row['cnt'];?></a>
+                    </span>
+                    <h3 class="timeline-header"><a href="#"><span id="message_<?php echo $key; ?>"><?php echo ($row['message'])?></span></a></h3>
+                    <div class="timeline-body"><b>Location:</b> <span id="location_<?php echo $key;?>"><?php echo $row['location'];?></span></div>
+                    <div class="timeline-footer">
+                        <?php if (empty($row['mantis_id'])): ?>
+
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-info">Assign to</button>
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <?php foreach($this->users as $user):?>
+                                            <li><a user="<?php echo $user->id; ?>" key="<?php echo $key; ?>" href="javascript::void(0);" onclick="assign(this);"><?php echo $user->name; ?></a></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($row['mantis_id']) && $row['status'] == 'Open'): ?>
+                            <div class="input-group margin fixed-btn-<?php echo $key; ?>" style="display: none; width: 50%" key="<?php echo $key; ?>">
+                                <input type="text" placeholder="Add comment" mantis="<?php echo $row['mantis_id']; ?>" id="comment_<?php echo $key; ?>" class="form-control">
+                                    <span class="input-group-btn">
+                                    <button type="button" key="<?php echo $key; ?>" class="btn btn-info btn-flat add-comment">Go!</button>
+                                    </span>
+                            </div>
+                            <a target="_blank" id="fixed_<?php echo $key; ?>" key="<?php echo $key; ?>" class="btn btn-success btn-flat fixed-btn fixed-btn-<?php echo $key; ?>">
+                                <i class="fa fa-check"></i>
+                                    <span id="mantis_issue_0">
+                                        Change status to resolved
+                                    </span>
+                            </a>
+                        <?php endif;?>
+                    </div>
+                </div>
+            </li>
+
+
+            <li>
+              <i class="fa fa-comments bg-red"></i>
+              <div class="timeline-item">
+                <span class="time"><i class="fa fa-clock-o"></i> <?php $this->time($row['log_date']);?></span>
+                <h3 class="timeline-header"><a href="#">Stack trace</a></h3>
+                <div class="timeline-body" id="stack_trace_<?php echo $key; ?>">
+                  <?php
+                        $flag = 0;
+                        if (!empty($row['referer'])){
+                            echo '<b>Referer :</b>', $row['referer'] , '<br>';
+                            $flag = 1;
+                        }
+                        if (!empty($row['stack_trace'])) {
+                            echo (str_replace('\n', '<br>', $row['stack_trace']));
+                            $flag = 1;
+                        }
+                        if (!$flag) {
+                            echo 'N/A';
+                        }
+                  ?>
+                </div>
+                <div class="timeline-footer">
+                </div>
+              </div>
+            </li>
+            <li>
+                <i class="fa fa-clock-o bg-gray"></i>
+            </li>
+          </ul>
+
+    </div>
+    <?php endforeach;?>
+</div>
+
+    
