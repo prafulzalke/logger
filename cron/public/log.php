@@ -192,12 +192,9 @@ $errorLog = new ErrorLog();
 
 $dates = [date('Y-m-d')];
 foreach ($dates as $date) {
-
     $extension = '';
-
     $errorLog->process("bastrucks.website.err$extension", $date, 'baspubweb1', 'vandam@172.16.32.103');
     $errorLog->process("bastrucks.website.err$extension", $date, 'baspubweb2', 'vandam@172.16.32.104');
-
 }
 
 
